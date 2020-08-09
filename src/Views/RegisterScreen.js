@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native';
-import { TextInput, Paragraph, Button, Title } from 'react-native-paper';
+import { Paragraph, Title, Snackbar  } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 //importando los estilos globales 
 import globlaStyles from '../Styles/globlaStyles';
 
+//Importando componentes 
+import FormularioRegistro from '../components/FormularioRegistro';
+import SnackError from '../components/SnackError';
+
 const RegisterScreen = () => {
 
   const navigation = useNavigation();
+  const [ mensaje, setMensaje ] = useState('');
+  const [ visible, setVisible ] = useState(false);
 
   return (
     <>
@@ -24,29 +30,14 @@ const RegisterScreen = () => {
             <Title style={styles.tituloLogo}>Organiza Tus Tareas</Title>
           </View>
         </View>
+
         <View>
-          <TextInput
-            mode='outlined'
-            label='Nombre'
-            value=''
-            style={styles.input}
-            />
-          <TextInput
-            mode='outlined'
-            label='Correo electronico'
-            value=''
-            style={styles.input}
-            />
-          <TextInput 
-            mode='outlined'
-            label='Contraseña'
-            style={styles.input}
-            />
-          <Button
-            mode='contained'
-            style={styles.input}
-            onPress={() => navigation.navigate('Login')}
-          >Registrate</Button>
+
+          <FormularioRegistro 
+            setMensaje={setMensaje}
+            setVisible={setVisible}
+          />
+
         </View>
 
         <View style={styles.registro}>
@@ -56,6 +47,12 @@ const RegisterScreen = () => {
             onPress={ () => navigation.navigate('Login')}
           >Inicia Sesión</Paragraph>
         </View>
+
+        <SnackError 
+          visible={visible}
+          mensaje={mensaje}
+          setVisible={setVisible}
+        ></SnackError>
 
       </View>
     </>

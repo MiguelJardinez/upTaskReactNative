@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native';
-import { TextInput, Paragraph, Button, Title } from 'react-native-paper';
+import {  Paragraph, Title } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 //importando los estilos globales 
 import globlaStyles from '../Styles/globlaStyles';
 
+//componentes 
+import FormularioLogin from '../components/FormularioLogin';
+import SnackError from '../components/SnackError';
+
 const LoginScreen = () => {
 
   const navigation = useNavigation();
+  const [ mensaje, setMensaje ] = useState('');
+  const [ visible, setVisible ] = useState(false);
 
   return (
     <>
@@ -24,23 +30,12 @@ const LoginScreen = () => {
             <Title style={styles.tituloLogo}>Organiza Tus Tareas</Title>
           </View>
         </View>
+
         <View>
-          <TextInput
-            mode='outlined'
-            label='Correo electronico'
-            value=''
-            style={styles.input}
-            />
-          <TextInput 
-            mode='outlined'
-            label='Contraseña'
-            style={styles.input}
-            />
-          <Button
-            mode='contained'
-            style={styles.input}
-            onPress={ () => navigation.navigate('Home')}
-          >Iniciar Sesión</Button>
+          <FormularioLogin 
+            setMensaje = { setMensaje }
+            setVisible = { setVisible } 
+          />
         </View>
 
         <View style={styles.registro}>
@@ -50,6 +45,13 @@ const LoginScreen = () => {
             onPress={ () => navigation.navigate('Registro')}
           >Registrate</Paragraph>
         </View>
+
+
+        <SnackError 
+          mensaje = { mensaje }
+          visible = { visible }
+          setVisible = { setVisible }
+        />
 
       </View>
     </>
@@ -94,8 +96,5 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontWeight: 'bold',
     marginRight: 16
-  },
-  input: {
-    marginBottom: 20
   }
 })
