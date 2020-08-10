@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
+
+
+//Apollo
+import { gql, useMutation } from '@apollo/client'; 
+
+const NUEVA_CUENTA = gql`
+  mutation crearUsuario($input: UsuarioInput) {
+    crearUsuario(input : $input )
+  }
+`;
 
 const FormularioRegistro = ({ setMensaje, setVisible }) => {
 
@@ -8,9 +18,10 @@ const FormularioRegistro = ({ setMensaje, setVisible }) => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
-  const registrarUsuario = () => {
-    
-    const usuario = { nombre, email, password }
+  //Apollo
+  const [ crearUsuario ] = useMutation(NUEVA_CUENTA); 
+
+  const registrarUsuario = async () => {
 
     //Validar Formulario 
     if( !nombre || !password || !email ){
@@ -27,9 +38,25 @@ const FormularioRegistro = ({ setMensaje, setVisible }) => {
       setMensaje('La contraseña debe ser al menos de 6 caracteres')
       return;
     }
-
+    
     //Guargar al usuario
-    console.log(usuario)
+    try {
+      const { data } = await crearUsuario({
+        variables: {
+          input: {
+            nombre,
+            email,
+            password
+          }
+        }
+      }); 
+      setVisible(true);
+      setMensaje(data.crearUsuario);
+      
+    } catch (error) {
+      setVisible(true);
+      setMensaje(error.message);
+    }
   }
 
   return (

@@ -13,6 +13,7 @@ import SnackError from '../components/SnackError';
 const LoginScreen = () => {
 
   const navigation = useNavigation();
+
   const [ mensaje, setMensaje ] = useState('');
   const [ visible, setVisible ] = useState(false);
 

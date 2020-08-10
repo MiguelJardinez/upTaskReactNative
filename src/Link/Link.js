@@ -7,6 +7,8 @@ import HomeScreen from '../Views/HomeScreen';
 import LoginScreen from '../Views/LoginScreen'; 
 import RegisterScreen from '../Views/RegisterScreen'; 
 import NuevaTarea from '../Views/NuevaTarea';
+import NuevoProyecto from '../Views/NuevoProyecto';
+import Proyecto from '../Views/Proyecto';
 
 //Inicializando la navegacion de stack
 const Stack = createStackNavigator(); 
@@ -15,7 +17,14 @@ const Link = () => {
 
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#1d80ab'
+        },
+        headerTintColor: '#fff'
+      }}
+    >
 
       <Stack.Screen 
         name='Login'
@@ -36,11 +45,34 @@ const Link = () => {
       <Stack.Screen 
         name='Home'
         component={HomeScreen}
+        options={{
+          title: 'Inicio',
+          headerLeft: false,
+        }}
       />
 
       <Stack.Screen 
-        name='Nueva'
+        name='Proyecto'
+        component={NuevoProyecto}
+        options={{
+          title: 'Nuevo Proyecto',
+        }}
+      />
+
+      <Stack.Screen 
+        name='Tarea'
         component={NuevaTarea}
+        options={{
+          title: 'Nueva Tarea',
+        }}
+      />
+
+      <Stack.Screen 
+        name='DetallesProyecto'
+        component={Proyecto}
+        options={ ({ route }) => ({
+          title: route.params.nombre,
+        })}
       />
 
     </Stack.Navigator>

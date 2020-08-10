@@ -10,11 +10,14 @@ import globlaStyles from '../Styles/globlaStyles';
 import FormularioRegistro from '../components/FormularioRegistro';
 import SnackError from '../components/SnackError';
 
+
 const RegisterScreen = () => {
 
   const navigation = useNavigation();
+
   const [ mensaje, setMensaje ] = useState('');
   const [ visible, setVisible ] = useState(false);
+
 
   return (
     <>
